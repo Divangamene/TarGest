@@ -1,28 +1,42 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TarGest.API.Conexao;
+using TarGest.API.DTOS;
 using TarGest.API.Entidades;
-using TarGest.API.Servicos;
 
-namespace TarGest.API.Controllers
+namespace TarGest.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class TarefasController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TarefasController : ControllerBase
+    private readonly ApiDbContext _context;
+    public TarefasController(ApiDbContext context)
     {
-        private readonly TarefaServicos _servico;
-        public TarefasController(TarefaServicos servicos)
-        {
-            _servico = servicos;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> CriarNovaTarefa([FromBody]TarefaServicos sc)
-        {
-            _servico.CriarTarefa.Add(sc);
-            return Ok();
-
-        }
-       
+        _context = context;
     }
+    [HttpPost]
+    public async Task<ActionResult> CriarTarefa([FromBody]TarefaDto dto)
+    {
+        var tarefa = new Tarefa { 
+        tituloTarefa=dto.tituloTarefa,
+        descricaoTarefa=dto.descricaoTarefa,
+        estadoTarefa=dto.estadoTarefa,
+        prazoTarefa =dto.prazoTarefa,
+        horaInicioTarefa=dto.horaInicioTarefa
+        };
+
+        await _context.Tarefas.AddRangeAsync(tarefa);
+        await _context.SaveChangesAsync();
+
+        return Ok(new TarefaDto {
+            tituloTarefa = dto.tituloTarefa,
+            descricaoTarefa = dto.descricaoTarefa,
+            estadoTarefa = dto.estadoTarefa,
+            prazoTarefa = dto.prazoTarefa,
+            horaInicioTarefa = dto.horaInicioTarefa
+
+        });
+    }
+   
 }

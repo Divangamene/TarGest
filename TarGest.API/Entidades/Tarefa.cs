@@ -7,10 +7,10 @@ namespace TarGest.API.Entidades
     {
         [Key]
         public int tarefaId { get; set; }
-        public string tarefaTitulo { get; set; } = string.Empty;
-        public string tarefaDescricao { get; set; } = string.Empty;
-        public EstadoTarefa estadoTarefa { get; set; }=EstadoTarefa.pedente;
-        public DateTime prazoTarefa { get; set; }
-        public DateTime horaInicio { get; set; } = DateTime.Now;
+        public string tituloTarefa { get; set; } = string.Empty;
+        public string descricaoTarefa { get; set; } = string.Empty;
+        public EstadoTarefa estadoTarefa { get; set; } = EstadoTarefa.pedente;
+        public DateTime prazoTarefa { get; set; } = DateTime.Today;
+        public DateTime horaInicioTarefa { get; set; } = DateTime.Now;
     }
 }
