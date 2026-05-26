@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TarGest.API.Conexao;
+using TarGest.API.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApiDbContext>(options=> 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<TarefaServicos>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

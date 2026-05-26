@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TarGest.API.Conexao;
 
 namespace TarGest.API.Controllers
 {
@@ -7,5 +8,11 @@ namespace TarGest.API.Controllers
     [ApiController]
     public class TarefasController : ControllerBase
     {
+        private readonly ApiDbContext _context;
+        public TarefasController(ApiDbContext contex)
+        {
+           _context= contex; 
+        }
+
     }
 }
