@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TarGest.API.Conexao;
 using TarGest.API.Entidades;
+using TarGest.API.Servicos;
 
 namespace TarGest.API.Controllers
 {
@@ -9,7 +10,19 @@ namespace TarGest.API.Controllers
     [ApiController]
     public class TarefasController : ControllerBase
     {
-        private readonly ApiDbContext _context; 
+        private readonly TarefaServicos _servico;
+        public TarefasController(TarefaServicos servicos)
+        {
+            _servico = servicos;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CriarNovaTarefa([FromBody]TarefaServicos sc)
+        {
+            _servico.CriarTarefa.Add(sc);
+            return Ok();
+
+        }
        
     }
 }
