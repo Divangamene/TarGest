@@ -9,16 +9,7 @@ namespace TarGest.API.Controllers
     [ApiController]
     public class TarefasController : ControllerBase
     {
-        private readonly ApiDbContext _context;
-        public TarefasController(ApiDbContext contex)
-        {
-           _context= contex; 
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> CriarTarefa()
-        {
-
-        }
+        private readonly ApiDbContext _context; 
+       
     }
 }
