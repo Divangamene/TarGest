@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TarGest.API.Conexao;
+using TarGest.API.Entidades;
 
 namespace TarGest.API.Controllers
 {
@@ -14,5 +15,10 @@ namespace TarGest.API.Controllers
            _context= contex; 
         }
 
+        [HttpPost]
+        public async Task<ActionResult> CriarTarefa()
+        {
+
+        }
     }
 }

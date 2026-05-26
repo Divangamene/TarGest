@@ -1,4 +1,5 @@
 ﻿using TarGest.API.Conexao;
+using TarGest.API.DTOS;
 using TarGest.API.Entidades;
 
 namespace TarGest.API.Servicos
@@ -14,13 +15,29 @@ namespace TarGest.API.Servicos
 
         //criar 
 
-        public async Task<Tarefa> CriarTarefa(Tarefa tarefa)
+        public async Task<TarefaDto> CriarTarefa(TarefaDto dto)
         {
-            _servico.Tarefas.Add(tarefa);
-            await _servico.SaveChangesAsync();
-            return tarefa;
 
+            var criar = new Tarefa { 
+            
+            tarefaTitulo= dto.tarefaTitulo,
+            tarefaDescricao= dto.tarefaDescricao,
+            estadoTarefa= dto.estadoTarefa,
+            prazoTarefa= dto.prazoTarefa,
 
-    }
+            };
+
+            await _servico.AddAsync(criar);
+           await  _servico.SaveChangesAsync();
+
+            return new TarefaDto
+            {
+                tarefaTitulo = criar.tarefaTitulo,
+                tarefaDescricao = criar.tarefaDescricao,
+                estadoTarefa = criar.estadoTarefa,
+                prazoTarefa = criar.prazoTarefa
+            };
+
+        }
         }
 }
