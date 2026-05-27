@@ -70,6 +70,22 @@ public class TarefasController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok();
     }
+    [HttpPut("{tarefaId}")]
+    public async Task<ActionResult<Tarefa>> AlterarTarefa([FromBody] TarefaDto dto,int tarefaId)
+    {
+        var obterElemento = await _context.Tarefas.FindAsync(tarefaId);
+        if (obterElemento == null) { 
+        return NotFound();
+        }
+
+        obterElemento.tituloTarefa = dto.tituloTarefa;
+        obterElemento.descricaoTarefa = dto.descricaoTarefa;
+        obterElemento.estadoTarefa = dto.estadoTarefa;
+        obterElemento.estadoTarefa=dto.estadoTarefa;
+        obterElemento.horaInicioTarefa=dto.horaInicioTarefa;
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
 
 
 
