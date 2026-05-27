@@ -38,5 +38,13 @@ public class TarefasController : ControllerBase
 
         });
     }
-   
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Tarefa>>> ObterTarefas()
+    {
+        var tarefas= await _context.Tarefas.ToListAsync();
+        await _context.SaveChangesAsync();
+        return Ok(tarefas);
+    }
+    
 }
