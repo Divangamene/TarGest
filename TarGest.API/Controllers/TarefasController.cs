@@ -46,5 +46,17 @@ public class TarefasController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(tarefas);
     }
+
+    [HttpGet("{tarefaId}")]
+    public async Task<ActionResult<Tarefa>> ObterTarefa(int tarefaId)
+    {
+        var obterId = await _context.Tarefas.FindAsync(tarefaId);
+        if(obterId == null)
+        {
+            return BadRequest();
+        }
+
+        return Ok(obterId);
+    }
     
 }
