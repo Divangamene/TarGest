@@ -16,14 +16,14 @@ public class TarefasController : ControllerBase
         _context = context;
     }
     [HttpPost]
-    public async Task<ActionResult> CriarTarefa([FromBody]TarefaDto dto)
+    public async Task<ActionResult> CriarTarefa([FromBody] TarefaDto dto)
     {
-        var tarefa = new Tarefa { 
-        tituloTarefa=dto.tituloTarefa,
-        descricaoTarefa=dto.descricaoTarefa,
-        estadoTarefa=dto.estadoTarefa,
-        prazoTarefa =dto.prazoTarefa,
-        horaInicioTarefa=dto.horaInicioTarefa
+        var tarefa = new Tarefa {
+            tituloTarefa = dto.tituloTarefa,
+            descricaoTarefa = dto.descricaoTarefa,
+            estadoTarefa = dto.estadoTarefa,
+            prazoTarefa = dto.prazoTarefa,
+            horaInicioTarefa = dto.horaInicioTarefa
         };
 
         await _context.Tarefas.AddRangeAsync(tarefa);
@@ -42,7 +42,7 @@ public class TarefasController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Tarefa>>> ObterTarefas()
     {
-        var tarefas= await _context.Tarefas.ToListAsync();
+        var tarefas = await _context.Tarefas.ToListAsync();
         await _context.SaveChangesAsync();
         return Ok(tarefas);
     }
@@ -51,12 +51,26 @@ public class TarefasController : ControllerBase
     public async Task<ActionResult<Tarefa>> ObterTarefa(int tarefaId)
     {
         var obterId = await _context.Tarefas.FindAsync(tarefaId);
-        if(obterId == null)
+        if (obterId == null)
         {
             return BadRequest();
         }
 
         return Ok(obterId);
     }
-    
+    [HttpDelete("{tarefaId}")]
+    public async Task<ActionResult> EliminarTarefa(int tarefaId)
+    {
+        var elemento = await _context.Tarefas.FindAsync(tarefaId);
+        if (elemento == null)
+        {
+            return NotFound();
+        }
+         _context.Tarefas.Remove(elemento);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+
+
 }
