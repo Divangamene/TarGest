@@ -1,0 +1,38 @@
+
+
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'ccb667e3-09cc-4f88-a7be-4bf3eca4e1f2'
+  imageRepository: 'apitargest'
+  containerRegistry: 'targest.azurecr.io'
+  dockerfilePath: 'DOCKERFILE'
+  tag: '$(Build.BuildId)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+ 
+pool:
+      vmImage: $(vmImageName)
+
+
+steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          latest
+          $(tag)
