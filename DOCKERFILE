@@ -12,5 +12,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
 WORKDIR /app
 
-COPY --from=ap-ven /api/out . 
+COPY --from=api-ven /api/out .
 ENTRYPOINT [ "dotnet" ,"TarGest.API.dll"]
