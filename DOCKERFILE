@@ -1,16 +1,17 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 as api-ven
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /app
 
-COPY /TarGest .
+COPY . .
 
-WORKDIR /TarGest/TarGest.API
+WORKDIR /app/TarGest/TarGest.API
 
 RUN dotnet publish -c Release -o /app/out
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 
 WORKDIR /app
 
-COPY --from=api-ven /api/out .
-ENTRYPOINT [ "dotnet" ,"TarGest.API.dll"]
+COPY --from=build /app/out .
+
+ENTRYPOINT ["dotnet", "TarGest.API.dll"]
