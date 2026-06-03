@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-WORKDIR /app/TarGest/TarGest.API
+RUN dotnet restore
 
-RUN dotnet publish -c Release -o /app/out
+RUN dotnet publish TarGest/TarGest.API/TarGest.API.csproj -c Release -o /app/out
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 
